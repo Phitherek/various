@@ -338,10 +338,12 @@ for(int i = 0; i < info.length(); i++) {
 					cmd += "Stan baterii: KRYTYCZNY (poniżej ";
 					cmd += critlev;
 					cmd += "%)'";
+					system(cmd.c_str());
 				} else if(lang == "en") {
 					cmd += "Battery level: CRITICAL (below ";
 					cmd += critlev;
-					cmd += "%)'";	
+					cmd += "%)'";
+					system(cmd.c_str());
 				}
 			}
 			notif = "crit";
@@ -366,10 +368,12 @@ for(int i = 0; i < info.length(); i++) {
 					cmd += "Stan baterii: NISKI (poniżej ";
 					cmd += lowlev;
 					cmd += "%)'";
+					system(cmd.c_str());
 				} else if(lang == "en") {
 					cmd += "Battery level: LOW (below ";
 					cmd += lowlev;
 					cmd += "%)'";	
+					system(cmd.c_str());
 				}
 			}
 			notif = "low";
