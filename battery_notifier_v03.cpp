@@ -11,7 +11,7 @@
 using namespace std;
 
 string lang="pl", snd="on", sndfile="/home/phitherek/zyn/low_battery.wav", sndplr="mplayer", adinfo="on", battinfo="on", errdelay="30", infodelay="10", lowlev="10", critlev="5", emptylev="1";
-NotifyNotification *notific;
+NotifyNotification *notific, *batnotif, *adnotif1, *adnotif2;
 
 void sigterm (int param) {
 	notific = notify_notification_new("battery_notifier: Terminated. Thanks for using!", NULL, NULL);
@@ -252,16 +252,16 @@ for(int i = 0; i < info.length(); i++) {
 					string cmd = "";
 					cmd += "battery_notifier: ";
 					cmd += "Zasilacz został odłączony.";
-					notific = notify_notification_new(cmd.c_str(), NULL, NULL);
-notify_notification_set_timeout(notific, atoi(infodelay.c_str()));
-notify_notification_show(notific, NULL);
+					adnotif1 = notify_notification_new(cmd.c_str(), NULL, NULL);
+notify_notification_set_timeout(adnotif1, atoi(infodelay.c_str()));
+notify_notification_show(adnotif1, NULL);
 				} else if(lang == "en") {
 					string cmd = "";
 					cmd += "battery_notifier: ";
 					cmd += "AC adapter disconnected.";
-					notify_notification_new(cmd.c_str(), NULL, NULL);
-notify_notification_set_timeout(notific, atoi(infodelay.c_str()));
-notify_notification_show(notific, NULL);	
+					adnotif1 = notify_notification_new(cmd.c_str(), NULL, NULL);
+notify_notification_set_timeout(adnotif1, atoi(infodelay.c_str()));
+notify_notification_show(adnotif1, NULL);	
 				}
 			}
 		}
@@ -273,16 +273,16 @@ notify_notification_show(notific, NULL);
 					string cmd = "";
 					cmd += "battery_notifier: ";
 					cmd += "Zasilacz został podłączony.";
-					notify_notification_new(cmd.c_str(), NULL, NULL);
-notify_notification_set_timeout(notific, atoi(infodelay.c_str()));
-notify_notification_show(notific, NULL);
+					adnotif2 = notify_notification_new(cmd.c_str(), NULL, NULL);
+notify_notification_set_timeout(adnotif2, atoi(infodelay.c_str()));
+notify_notification_show(adnotif2, NULL);
 				} else if(lang == "en") {
 					string cmd = "";
 					cmd += "battery_notifier: ";
 					cmd += "AC adapter connected.";
-					notify_notification_new(cmd.c_str(), NULL, NULL);
-notify_notification_set_timeout(notific, atoi(infodelay.c_str()));
-notify_notification_show(notific, NULL);	
+					adnotif2 = notify_notification_new(cmd.c_str(), NULL, NULL);
+notify_notification_set_timeout(adnotif2, atoi(infodelay.c_str()));
+notify_notification_show(adnotif2, NULL);	
 				}
 			}
 		}
@@ -310,16 +310,16 @@ notify_notification_show(notific, NULL);
 					cmd += "Stan baterii: WYŁADOWANA (poniżej ";
 					cmd += emptylev;
 					cmd += "%)! Zapisz swoją pracę!";
-					notific = notify_notification_new(cmd.c_str(), NULL, NULL);
-notify_notification_set_timeout(notific, atoi(errdelay.c_str()));
-notify_notification_show(notific, NULL);
+					batnotif = notify_notification_new(cmd.c_str(), NULL, NULL);
+notify_notification_set_timeout(batnotif, atoi(errdelay.c_str()));
+notify_notification_show(batnotif, NULL);
 				} else if(lang == "en") {
 					cmd += "Battery state: EMPTY (below ";
 					cmd += emptylev;
 					cmd += "%)! Save all your work!";
-					notific = notify_notification_new(cmd.c_str(), NULL, NULL);
-notify_notification_set_timeout(notific, atoi(errdelay.c_str()));
-notify_notification_show(notific, NULL);
+					batnotif = notify_notification_new(cmd.c_str(), NULL, NULL);
+notify_notification_set_timeout(batnotif, atoi(errdelay.c_str()));
+notify_notification_show(batnotif, NULL);
 				}
 			}
 			notif = "empty";
@@ -339,16 +339,16 @@ notify_notification_show(notific, NULL);
 					cmd += "Stan baterii: KRYTYCZNY (poniżej ";
 					cmd += critlev;
 					cmd += "%)";
-					notific = notify_notification_new(cmd.c_str(), NULL, NULL);
-notify_notification_set_timeout(notific, atoi(errdelay.c_str()));
-notify_notification_show(notific, NULL);
+					batnotif = notify_notification_new(cmd.c_str(), NULL, NULL);
+notify_notification_set_timeout(batnotif, atoi(errdelay.c_str()));
+notify_notification_show(batnotif, NULL);
 				} else if(lang == "en") {
 					cmd += "Battery level: CRITICAL (below ";
 					cmd += critlev;
 					cmd += "%)";
-					notific = notify_notification_new(cmd.c_str(), NULL, NULL);
-notify_notification_set_timeout(notific, atoi(errdelay.c_str()));
-notify_notification_show(notific, NULL);
+					batnotif = notify_notification_new(cmd.c_str(), NULL, NULL);
+notify_notification_set_timeout(batnotif, atoi(errdelay.c_str()));
+notify_notification_show(batnotif, NULL);
 				}
 			}
 			notif = "crit";
@@ -368,16 +368,16 @@ notify_notification_show(notific, NULL);
 					cmd += "Stan baterii: NISKI (poniżej ";
 					cmd += lowlev;
 					cmd += "%)";
-					notific = notify_notification_new(cmd.c_str(), NULL, NULL);
-notify_notification_set_timeout(notific, atoi(errdelay.c_str()));
-notify_notification_show(notific, NULL);
+					batnotif = notify_notification_new(cmd.c_str(), NULL, NULL);
+notify_notification_set_timeout(batnotif, atoi(errdelay.c_str()));
+notify_notification_show(batnotif, NULL);
 				} else if(lang == "en") {
 					cmd += "Battery level: LOW (below ";
 					cmd += lowlev;
 					cmd += "%)";	
-					notific = notify_notification_new(cmd.c_str(), NULL, NULL);
-notify_notification_set_timeout(notific, atoi(errdelay.c_str()));
-notify_notification_show(notific, NULL);
+					batnotif = notify_notification_new(cmd.c_str(), NULL, NULL);
+notify_notification_set_timeout(batnotif, atoi(errdelay.c_str()));
+notify_notification_show(batnotif, NULL);
 				}
 			}
 			notif = "low";
