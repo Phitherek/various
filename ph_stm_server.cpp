@@ -94,6 +94,7 @@ int main() {
 	addr_size = sizeof(their_addr);
 	newsocdesc = accept(socdesc, (sockaddr*)&their_addr, &addr_size);
 	if(newsocdesc == -1) {
+		sleep(1);
 		continue;
 	}
 	cout << "Got connection!" << endl;
