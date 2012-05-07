@@ -68,7 +68,7 @@ if((numbytes = recvfrom(socdesc, buf, 99, 0, (sockaddr *)&their_addr, &addr_len)
 		cerr << "recvfrom FAILED: " << errno << endl;
 		return EXIT_FAILURE;		
 }
-got_message = notify_notification_new("ph_ftm_receiver: Got message packet!", NULL, NULL);
+got_message = notify_notification_new("Phitherek_' s Fire-To-Me Receiver: Got message packet!", NULL, NULL);
 notify_notification_show(got_message, NULL);
 cout << "Got message packet! From: " << inet_ntop(their_addr.ss_family, get_in_addr((struct sockaddr *)&their_addr), s, sizeof(s)) << endl;
 cout << "Length of packet: " << numbytes << " bytes." << endl;
