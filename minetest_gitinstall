@@ -1,0 +1,10 @@
+#!/bin/bash
+git clone https://github.com/celeron55/minetest.git
+cd minetest
+cd games
+git clone https://github.com/celeron55/minetest_game.git
+mv minetest_game minetest
+cd ..
+cmake . -DRUN_IN_PLACE=1
+make -j2
+echo "Minetest installed! Binaries are in bin directory."
