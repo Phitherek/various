@@ -11,4 +11,7 @@ cmake . -DRUN_IN_PLACE=1
 make -j2
 fi
 rm check
+cd ..
+chmod a+rwx -R minetest
+cd minetest
 echo "Minetest updated!"
