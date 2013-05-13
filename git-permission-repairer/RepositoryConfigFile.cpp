@@ -23,11 +23,14 @@ RepositoryConfigFile::RepositoryConfigFile(std::string path) {
 		char c;
 		do {
 			in.get(c);
+			if(c != '\n') {
 			line += c;
+			}
 		} while (c != '\n' && in);
 		if(!in) {
 			break;
 		}
+		line = strip_endl(line);
 		if(action == "parse") {
 			if(line[0] == '[') {
 				std::string tmpstr = "";

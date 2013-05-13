@@ -33,11 +33,14 @@ ConfigFile::ConfigFile(std::string path) {
 		char c;
 		do {
 			conf.get(c);
+			if(c != '\n') {
 			line += c;
+			}
 		} while (c != '\n' && conf);
 		if(!conf) {
 			break;
 		}
+		line = strip_endl(line);
 		if(line[0] == '[') {
 			std::string tmpstr = "";
 			for(int i = 1; i < line.length() && line[i] != ']'; i++) {

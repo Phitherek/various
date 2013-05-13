@@ -8,6 +8,20 @@
 /// \date 2013
 /// \version 0.1
 
+/// \fn inline std::string strip_endl(std::string str)
+/// \brief A function, that strips endlines from a string.
+/// \param str A string to strip endlines from.
+/// \return A string stripped from endlines.
+inline std::string strip_endl(std::string str) {
+	std::string result = "";
+	for(unsigned int i = 0; i < str.length(); i++) {
+		if(str[i] != '\n') {
+			result += str[i];
+		}
+	}
+	return result;
+}
+
 /// \namespace GitPermissionRepairer
 /// \brief A global namespace for Git Permission Repairer
 namespace GitPermissionRepairer {

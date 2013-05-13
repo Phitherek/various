@@ -1,6 +1,6 @@
 all:
 	${CXX} ${CXXFLAGS} -o git-permission-repairer git-permission-repairer.cpp Exceptions.cpp ConfigFile.cpp RepositoryConfigFile.cpp
 debug:
-	${CXX} ${CXXFLAGS} -o git-permission-repairer git-permission-repairer.cpp Exceptions.cpp ConfigFile.cpp RepositoryConfigFile.cpp
+	${CXX} ${CXXFLAGS} -o git-permission-repairer git-permission-repairer.cpp Exceptions.cpp ConfigFile.cpp RepositoryConfigFile.cpp -g
 clean:
 	rm -rf git-permission-repairer *~
