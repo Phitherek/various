@@ -32,6 +32,7 @@ RepositoryConfigFile::RepositoryConfigFile(std::string path) {
 		}
 		line = strip_endl(line);
 		if(action == "parse") {
+			if(line != "") {
 			if(line[0] == '[') {
 				std::string tmpstr = "";
 				for(int i = 1; i < line.length() && line[i] != ']'; i++) {
@@ -47,6 +48,7 @@ RepositoryConfigFile::RepositoryConfigFile(std::string path) {
 				action = tmpstr;
 			} else {
 				throw ParseException("Expected name, directory, user or group in []!");
+			}
 			}
 		} else if(action == "name") {
 			if(line == "" || line[0] == '[') {
