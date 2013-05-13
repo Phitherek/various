@@ -17,9 +17,9 @@ RepositoryConfigFile::RepositoryConfigFile(std::string path) {
 		err += "!";
 		throw FileException(err);
 	}
+		std::string action = "parse";
 	while(!in.eof()) {
 		std::string line = "";
-		std::string action = "parse";
 		char c;
 		do {
 			in.get(c);
@@ -47,7 +47,7 @@ RepositoryConfigFile::RepositoryConfigFile(std::string path) {
 				}
 				action = tmpstr;
 			} else {
-				throw ParseException("Expected name, directory, user or group in []!");
+				throw ParseException("Expected name, directory, user, group or end in []!");
 			}
 			}
 		} else if(action == "name") {
