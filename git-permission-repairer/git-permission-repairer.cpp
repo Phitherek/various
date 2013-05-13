@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <vector>
 #include <string>
+#include <unistd.h>
 using namespace std;
 
 int main(int argc, char** argv) {
@@ -56,10 +57,7 @@ for(unsigned int i = 0; i < rcfvec.size(); i++) {
 cout << "Processing: " << rcfvec[i].getRepositoryName() << "..." << endl;
 string cmd = "";
 cout << "cd..." << endl;
-cmd += "cd ";
-cmd += rcfvec[i].getRepositoryPath();
-system(cmd.c_str());
-cmd = "";
+chdir(rcfvec[i].getRepositoryPath().c_str());
 cout << "git checkout master..." << endl;
 cmd = "git checkout master";
 system(cmd.c_str());
@@ -76,10 +74,8 @@ cout << "chmod..." << endl;
 cmd += "chmod ug+rwx -R *";
 system(cmd.c_str());
 cmd = "";
-cout << "cd .git...";
-cmd = "cd .git";
-system(cmd.c_str());
-cmd = "";
+cout << "cd .git..." << endl;
+chdir(".git");
 cout << "chown..." << endl;
 cmd += "chown ";
 cmd += rcfvec[i].getOwningUser();
@@ -92,8 +88,10 @@ cout << "chmod..." << endl;
 cmd += "chmod ug+rwx -R *";
 system(cmd.c_str());
 cmd = "";
-cout << "cd .. ...";
-cmd = "cd ..";
+cout << "cd .. ..." << endl;
+chdir("..");
+cout << "git commit..." << endl;
+cmd = "git commit -a -m 'auto-commit by git-permission-repairer'";
 system(cmd.c_str());
 cmd = "";
 cout << "git checkout local..." << endl;
@@ -101,8 +99,7 @@ cmd = "git checkout local";
 system(cmd.c_str());
 cmd = "";
 cout << "cd..." << endl;
-cmd = "cd";
-system(cmd.c_str());
+chdir("");
 cout << "Done!" << endl;
 }
 cout << "All done! Thank you for using Git Permission Repairer!" << endl;
