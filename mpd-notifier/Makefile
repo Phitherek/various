@@ -6,6 +6,6 @@ tests:
 	g++ -o MPDTrackDescriptionTest MPDTrackDescriptionTest.cpp Exceptions.cpp -lmpdclient
 	g++ -o NotifyEngineTest NotifyEngineTest.cpp NotifyEngine.cpp Exceptions.cpp `pkg-config --cflags --libs libnotify`
 install:
-	cp mpd-notifier-config mpd-notifier $PREFIX/bin
+	cp mpd-notifier-config mpd-notifier ${PREFIX}/bin
 clean:
 	rm -rf mpd-notifier-config mpd-notifier NotifyEngineTest MPDTrackDescriptionTest

@@ -17,6 +17,7 @@ NotifyEngine::NotifyEngine(int normaltimeout, int errortimeout) {
 NotifyEngine::~NotifyEngine() {
 	GError* error = NULL;
 	notify_notification_close(_statuschangenn, &error);
+	error = NULL;
 	notify_notification_close(_errornn, &error);
 	notify_uninit();
 }
