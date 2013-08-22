@@ -9,7 +9,7 @@
 using namespace std;
 
 int main(int argc, char** argv) {
-cout << "Git Permission Repairer v. 0.1 (C) 2013 by Phitherek_" << endl;
+cout << "Git Permission Repairer v. 0.1.1 (C) 2013 by Phitherek_" << endl;
 string home = getenv("HOME");
 string confdir;
 confdir = home + "/.git-permission-repairer/global.config";
@@ -93,6 +93,22 @@ chdir("..");
 cout << "git commit..." << endl;
 cmd = "git commit -a -m 'auto-commit by git-permission-repairer'";
 system(cmd.c_str());
+cmd = "";
+cout << "chown..." << endl;
+cmd += "chown ";
+cmd += rcfvec[i].getOwningUser();
+cmd += ":";
+cmd += rcfvec[i].getOwningGroup();
+cmd += " -R *";
+cmd = "";
+cout << "cd .git..." << endl;
+chdir(".git");
+cout << "chown..." << endl;
+cmd += "chown ";
+cmd += rcfvec[i].getOwningUser();
+cmd += ":";
+cmd += rcfvec[i].getOwningGroup();
+cmd += " -R *";
 cmd = "";
 cout << "git checkout local..." << endl;
 cmd = "git checkout local";
