@@ -110,6 +110,8 @@ cmd += ":";
 cmd += rcfvec[i].getOwningGroup();
 cmd += " -R *";
 cmd = "";
+cout << "cd .. ..." << endl;
+chdir("..");
 cout << "git checkout local..." << endl;
 cmd = "git checkout local";
 system(cmd.c_str());
