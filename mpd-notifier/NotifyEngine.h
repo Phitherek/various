@@ -27,6 +27,9 @@ public:
 	///< \param status Track status.
 	void displayError(std::string error); ///< \brief A function displaying error notification.
 	///< \param error Error message.
+	void reload(int normaltimeout, int errortimeout); ///< \brief A function reloading NotifyEngine.
+	///< \param normaltimeout A timeout for normal status change notification [ms].
+	///< \param errortimeout A timeout for error notification [ms].
 };
 }
 #endif

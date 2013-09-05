@@ -81,3 +81,20 @@ void NotifyEngine::displayError(std::string error) {
 			throw exc;
 		}
 }
+void NotifyEngine::reload(int normaltimeout, int errortimeout) {
+	GError* error = NULL;
+	notify_notification_close(_statuschangenn, &error);
+	error = NULL;
+	notify_notification_close(_errornn, &error);
+	notify_uninit();
+	if(notify_init("MPDNotifier")) {
+		_statuschangenn = notify_notification_new("MPD Status Change", "Unknown", "dialog-question");
+		_errornn = notify_notification_new("MPDNotifier encountered an error!", "Unknown", "dialog-error");
+		notify_notification_set_timeout(_statuschangenn, normaltimeout);
+		notify_notification_set_timeout(_errornn, errortimeout);
+	} else {
+		NotifyException exc("Could not reload notify engine!");
+		throw exc;
+	}
+}
+
