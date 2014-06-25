@@ -203,6 +203,7 @@ if(conf) {
 
 
 int main() {
+int check = 0;
 string state = "run";
 string notif = "none";
 notify_init("battery_notifier");
@@ -211,7 +212,7 @@ parseret = confparse();
 if(parseret == 0) {
 errdelay += "000";
 infodelay += "000";                                                
-notific = notify_notification_new("battery_notifier v. 0.3 (C) 2012 by Phitherek_: Started", NULL, NULL);
+notific = notify_notification_new("battery_notifier v. 0.3.1 (C) 2012-2014 by Phitherek_: Started", NULL, NULL);
 notify_notification_set_timeout(notific, atoi(infodelay.c_str()));
 notify_notification_show(notific, NULL);
 while(true) {
@@ -394,6 +395,11 @@ notify_notification_show(batnotif, NULL);
 	}
 }
 sleep(5);
+check++;
+if(check == 50) {
+    notify_uninit();
+    notify_init("battery_notifier");
+}
 }
 notify_uninit();
 return EXIT_SUCCESS;

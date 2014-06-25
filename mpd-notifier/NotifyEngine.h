@@ -6,7 +6,7 @@
 /// \brief A class that implements a notifying engine via libnotify.
 /// \author Phitherek_
 /// \date 2013
-/// \version 0.1
+/// \version 0.2
 
 /// \namespace MPDNotifier
 /// \brief A global namespace for MPDNotifier.

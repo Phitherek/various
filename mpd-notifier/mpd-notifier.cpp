@@ -9,7 +9,7 @@
 using namespace std;
 
 int main() {
-	cout << "MPDNotifier v. 0.2 (c) 2013 by Phitherek_" << endl;
+	cout << "MPDNotifier v. 0.2.1 (c) 2013-2014 by Phitherek_" << endl;
 	try {
 		std::string home = getenv("HOME");
 		std::string path = home + "/.mpd-notifier/config";
@@ -24,26 +24,32 @@ int main() {
 		std::string lastStatus = "";
 		int i = 0;
 		while(true) {
-			track.update();
-			if(track.getDescription() != lastDescription || track.getStatus() != lastStatus) {
-				notify.displayStatusChange(track.getDescription(), track.getStatus());
+		    try {
+			    track.update();
+			    if(track.getDescription() != lastDescription || track.getStatus() != lastStatus) {
+			    	notify.displayStatusChange(track.getDescription(), track.getStatus());
+			    }
+			    lastDescription = track.getDescription();
+			    lastStatus = track.getStatus();
+			    if(i == 450) {
+			    	notify.reload(settings.getStatusChangeTimeout(), settings.getErrorTimeout());
+			    	i = 0;
+			    } else {
+			    	i++;
+			    }
+			    sleep(2);
+			} catch(MPDNotifier::NotifyException &exc) {
+			    cout << "Notify engine exception occured: " << exc.what() << "! Reloading notify engine..." << endl;
+			    notify.reload(settings.getStatusChangeTimeout(), settings.getErrorTimeout());
+			    lastDescription = "";
+			    lastStatus = "";
 			}
-			lastDescription = track.getDescription();
-			lastStatus = track.getStatus();
-			if(i == 450) {
-				notify.reload(settings.getStatusChangeTimeout(), settings.getErrorTimeout());
-				i = 0;
-			} else {
-				i++;
-			}
-			sleep(2);
 		}
 	} catch(MPDNotifier::SettingsException &exc) {
 		cout << "Settings exception occured: " << exc.what() << endl;
 		return EXIT_FAILURE;
 	} catch(MPDNotifier::NotifyException &exc) {
 		cout << "Notify engine exception occured: " << exc.what() << endl;
-		return EXIT_FAILURE;
 	} catch(MPDNotifier::ConnectionException &exc) {
 		cout << "MPD connection exception occured: " << exc.what() << endl;
 		return EXIT_FAILURE;
