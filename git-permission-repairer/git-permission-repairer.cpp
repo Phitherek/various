@@ -1,6 +1,7 @@
 #include "Exceptions.h"
 #include "ConfigFile.h"
 #include "RepositoryConfigFile.h"
+#include "BranchDetector.h"
 #include <iostream>
 #include <cstdlib>
 #include <vector>
@@ -9,7 +10,7 @@
 using namespace std;
 
 int main(int argc, char** argv) {
-cout << "Git Permission Repairer v. 0.1.1 (C) 2013 by Phitherek_" << endl;
+cout << "Git Permission Repairer v. 0.2 (C) 2013-2014 by Phitherek_" << endl;
 string home = getenv("HOME");
 string confdir;
 confdir = home + "/.git-permission-repairer/global.config";
@@ -54,73 +55,80 @@ if(argc < 1) {
 	cout << "Done adding!" << endl;
 }
 for(unsigned int i = 0; i < rcfvec.size(); i++) {
-cout << "Processing: " << rcfvec[i].getRepositoryName() << "..." << endl;
-string cmd = "";
-cout << "cd..." << endl;
-chdir(rcfvec[i].getRepositoryPath().c_str());
-cout << "git checkout master..." << endl;
-cmd = "git checkout master";
-system(cmd.c_str());
-cmd = "";
-cout << "chown..." << endl;
-cmd += "chown ";
-cmd += rcfvec[i].getOwningUser();
-cmd += ":";
-cmd += rcfvec[i].getOwningGroup();
-cmd += " -R *";
-system(cmd.c_str());
-cmd = "";
-cout << "chmod..." << endl;
-cmd += "chmod ug+rwx -R *";
-system(cmd.c_str());
-cmd = "";
-cout << "cd .git..." << endl;
-chdir(".git");
-cout << "chown..." << endl;
-cmd += "chown ";
-cmd += rcfvec[i].getOwningUser();
-cmd += ":";
-cmd += rcfvec[i].getOwningGroup();
-cmd += " -R *";
-system(cmd.c_str());
-cmd = "";
-cout << "chmod..." << endl;
-cmd += "chmod ug+rwx -R *";
-system(cmd.c_str());
-cmd = "";
-cout << "cd .. ..." << endl;
-chdir("..");
-cout << "git commit..." << endl;
-cmd = "git commit -a -m 'auto-commit by git-permission-repairer'";
-system(cmd.c_str());
-cmd = "";
-cout << "chown..." << endl;
-cmd += "chown ";
-cmd += rcfvec[i].getOwningUser();
-cmd += ":";
-cmd += rcfvec[i].getOwningGroup();
-cmd += " -R *";
-system(cmd.c_str());
-cmd = "";
-cout << "cd .git..." << endl;
-chdir(".git");
-cout << "chown..." << endl;
-cmd += "chown ";
-cmd += rcfvec[i].getOwningUser();
-cmd += ":";
-cmd += rcfvec[i].getOwningGroup();
-cmd += " -R *";
-system(cmd.c_str());
-cmd = "";
-cout << "cd .. ..." << endl;
-chdir("..");
-cout << "git checkout local..." << endl;
-cmd = "git checkout local";
-system(cmd.c_str());
-cmd = "";
-cout << "cd..." << endl;
-chdir("");
-cout << "Done!" << endl;
+    cout << "Processing: " << rcfvec[i].getRepositoryName() << "..." << endl;
+    string cmd = "";
+    cout << "cd..." << endl;
+    chdir(rcfvec[i].getRepositoryPath().c_str());
+    GitPermissionRepairer::BranchDetector bd(rcfvec[i].getRepositoryPath());
+    while(!bd.end()) {
+        std::string bname = bd.getNextBranch();
+        if(bname != "") {
+            cout << "git checkout " << bname << "..." << endl;
+            cmd = "git checkout ";
+            cmd += bname;
+            system(cmd.c_str());
+            cmd = "";
+            cout << "chown..." << endl;
+            cmd += "chown ";
+            cmd += rcfvec[i].getOwningUser();
+            cmd += ":";
+            cmd += rcfvec[i].getOwningGroup();
+            cmd += " -R *";
+            system(cmd.c_str());
+            cmd = "";
+            cout << "chmod..." << endl;
+            cmd += "chmod ug+rwx -R *";
+            system(cmd.c_str());
+            cmd = "";
+            cout << "cd .git..." << endl;
+            chdir(".git");
+            cout << "chown..." << endl;
+            cmd += "chown ";
+            cmd += rcfvec[i].getOwningUser();
+            cmd += ":";
+            cmd += rcfvec[i].getOwningGroup();
+            cmd += " -R *";
+            system(cmd.c_str());
+            cmd = "";
+            cout << "chmod..." << endl;
+            cmd += "chmod ug+rwx -R *";
+            system(cmd.c_str());
+            cmd = "";
+            cout << "cd .. ..." << endl;
+            chdir("..");
+            cout << "git commit..." << endl;
+            cmd = "git commit -a -m 'auto-commit by git-permission-repairer'";
+            system(cmd.c_str());
+            cmd = "";
+            cout << "chown..." << endl;
+            cmd += "chown ";
+            cmd += rcfvec[i].getOwningUser();
+            cmd += ":";
+            cmd += rcfvec[i].getOwningGroup();
+            cmd += " -R *";
+            system(cmd.c_str());
+            cmd = "";
+            cout << "cd .git..." << endl;
+            chdir(".git");
+            cout << "chown..." << endl;
+            cmd += "chown ";
+            cmd += rcfvec[i].getOwningUser();
+            cmd += ":";
+            cmd += rcfvec[i].getOwningGroup();
+            cmd += " -R *";
+            system(cmd.c_str());
+            cmd = "";
+            cout << "cd .. ..." << endl;
+            chdir("..");
+        }
+    }
+    cout << "git checkout local..." << endl;
+    cmd = "git checkout local";
+    system(cmd.c_str());
+    cmd = "";
+    cout << "cd..." << endl;
+    chdir("");
+    cout << "Done!" << endl;
 }
 cout << "All done! Thank you for using Git Permission Repairer!" << endl;
 return EXIT_SUCCESS;
