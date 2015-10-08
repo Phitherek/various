@@ -1,0 +1,19 @@
+#!/bin/bash
+DEFAULT=3600
+if [[ "$#" -lt "1" ]]
+then
+	echo "Usage: $0 [off|default|<number_of_seconds>]"
+else
+	if [[ "$1" == "off" ]]
+	then
+		xset s off
+		xset -dpms
+	elif [[ "$1" == "default" ]]
+	then
+		xset s $DEFAULT $DEFAULT
+		xset dpms $DEFAULT $DEFAULT $DEFAULT
+	else
+		xset s $1 $1
+		xset dpms $1 $1 $1
+	fi
+fi
