@@ -1,0 +1,20 @@
+#!/home/phitherek/.rvm/wrappers/ruby-2.2.2/ruby
+if ARGV.count != 1
+    puts "Usage: #{$0} [default-sink|up|down|mute]"
+else
+    default_sink = `pacmd list-sinks`
+    default_sink = default_sink[/\s*\* index: [0-9]+/]
+    default_sink[/\s*\* index: /] = ""
+    if ARGV[0] == "default-sink"
+        puts default_sink
+    elsif ARGV[0] == "up"
+       `pactl set-sink-volume #{default_sink} +5%`
+    elsif ARGV[0] == "down"
+       `pactl set-sink-volume #{default_sink} -5%`
+    elsif ARGV[0] == "mute"
+       `pactl set-sink-mute #{default_sink} toggle`
+    else
+        puts "Usage: #{$0} [default-sink|up|down|mute]"
+    end
+end
+
